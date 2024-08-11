@@ -41,7 +41,7 @@
         </style>
     </head>
     <body>
-        <h1>Hello world! Meow!</h1>
+        <h1>Hello world! Ribbit!</h1>
         <input type="range" id="position-slider" min="0" max="100">
         <img id="gavin-scribbletuber" src="gavin_closed.png" style="left: 0;position: relative; width: 200px;">
         <div class=""></div>
@@ -84,19 +84,19 @@
                         console.log(dB)
                         
                         if (dB < 10) {
-                            scribbletuber.src = "closed.png"
+                            scribbletuber.src = "gavin_closed.png"
                             scribbletuber.style.bottom = `${dB/10}px`
                             scribbletuber.classList.remove('talking')
                             scribbletuber.classList.add('idle')
                         } else if (dB < 20) {
-                            scribbletuber.src = "open.png"
+                            scribbletuber.src = "gavin_open.png"
                             scribbletuber.style.bottom = `${dB}px`
                             scribbletuber.classList.add('talking')
                             scribbletuber.classList.remove('idle')
                         }
                         else {
                             // super loud
-                            scribbletuber.src = "scream.png"
+                            scribbletuber.src = "gavin_scream.png"
                             scribbletuber.style.bottom = `${dB}px`
                             scribbletuber.classList.add('talking')
                             scribbletuber.classList.remove('idle')

@@ -3,13 +3,22 @@
     <head>
         <title>Scribbletuber!</title>
         <style>
-            /* .audioBar {
-                background-color: #000000;
-                /* overflow: hidden; */
-                /* position: fixed;
-                bottom: 0;
-                width: 100%; */
-            /* } */ 
+            html {
+                background-color: lime;
+            }
+                /* .audioBar {
+                content: "";
+                color: #fff;
+                background-color: #f1f1f1;
+                height: 24px;
+                width: 50%;
+            } */
+            .audioBar {
+                color: #000;
+                background-color: palevioletred;
+                height: 24px;
+                /* width: 25%; */
+            }
             #scribbletuber {
                 transition-duration: 0.1s;
             }
@@ -44,16 +53,20 @@
         <h1>Hello world! Meow!</h1>
         <input type="range" id="position-slider" min="0" max="100">
         <img id="scribbletuber" src="closed.png" style="left: 0;position: relative; width: 200px;">
-        <div class=""></div>
+        <div class="audioBar" id="audioBar"></div>
+
         <script>
             const positionSlider = document.getElementById('position-slider')
             const scribbletuber = document.getElementById('scribbletuber')
+            const audioBar = document.getElementById('audioBar')
 
             // when you slide the input, move the image
             scribbletuber.style.left = `${positionSlider.value}px`
             positionSlider.addEventListener('input', () => {
                 scribbletuber.style.left = `${positionSlider.value}px`
             })
+
+
 
             navigator.mediaDevices.getUserMedia({ audio: true })
                 .then((stream) => {
@@ -81,6 +94,9 @@
                         }
                         const dB = Math.min(100, -Math.round(array.reduce((x, y) => x + y / array.length)) + 200)
                         
+                        //set audioBar length to dB
+                        audioBar.style.width = `${dB}%`
+
                         console.log(dB)
                         
                         if (dB < 10) {
