@@ -10,12 +10,33 @@
                 bottom: 0;
                 width: 100%; */
             /* } */ 
+            #scribbletuber {
+                transition-duration: 0.1s;
+            }
+
              .idle {
-                animation: idle
+                animation: idle 1s infinite alternate;
+                filter: contrast(0.7);
              }
 
              .talking {
+                animation: talking 0.2s infinite alternate;
+             }
 
+             @keyframe idle {
+                from {
+                    transform: translateY(0%);
+                } to {
+                    transform: translateY(2%);
+                }
+             }
+
+             @keyframes talking {
+                from {
+                    transform: scale(1.01, 0.99) translateY(2%);
+                } to {
+                    transform: scale(0.99, 1.01) translateY(0%);
+                }
              }
         </style>
     </head>
@@ -62,23 +83,23 @@
                         
                         console.log(dB)
                         
-                        if (dB < 15) {
+                        if (dB < 10) {
                             scribbletuber.src = "closed.png"
                             scribbletuber.style.bottom = `${dB/10}px`
-                            // scribbletuber.classList.remove('talking')
-                            // scribbletuber.classList.add('idle')
+                            scribbletuber.classList.remove('talking')
+                            scribbletuber.classList.add('idle')
                         } else if (dB < 20) {
                             scribbletuber.src = "open.png"
                             scribbletuber.style.bottom = `${dB}px`
-                            // scribbletuber.classList.add('talking')
-                            // scribbletuber.classList.remove('idle')
+                            scribbletuber.classList.add('talking')
+                            scribbletuber.classList.remove('idle')
                         }
                         else {
                             // super loud
                             scribbletuber.src = "scream.png"
                             scribbletuber.style.bottom = `${dB}px`
-                            // scribbletuber.classList.add('talking')
-                            // scribbletuber.classList.remove('idle')
+                            scribbletuber.classList.add('talking')
+                            scribbletuber.classList.remove('idle')
                         }
                     }
                     // })
