@@ -15,9 +15,13 @@
             } */
             .audioBar {
                 color: #000;
-                background-color: palevioletred;
+
                 height: 24px;
                 /* width: 25%; */
+            }
+            .audioAdjuster {
+                height: 24px;
+                width: 100%;
             }
             #scribbletuber {
                 transition-duration: 0.1s;
@@ -50,15 +54,21 @@
         </style>
     </head>
     <body>
-        <h1>Hello world! Meow!</h1>
+        <h1 style="color: fuchsia;">Hello world! Meow!</h1>
         <input type="range" id="position-slider" min="0" max="100">
         <img id="scribbletuber" src="closed.png" style="left: 0;position: relative; width: 200px;">
-        <div class="audioBar" id="audioBar"></div>
+        <div class="controlPanel">
+            <div class="audioBar" id="audioBar"></div>
+            <input type="range" class="audioAdjuster" id="audioAdjuster" min="0" max="100">
+        </div>
 
+    
         <script>
             const positionSlider = document.getElementById('position-slider')
             const scribbletuber = document.getElementById('scribbletuber')
             const audioBar = document.getElementById('audioBar')
+            const audioAdjuster = document.getElementById('audioAdjuster')
+            var speakingValue = 20
 
             // when you slide the input, move the image
             scribbletuber.style.left = `${positionSlider.value}px`
@@ -66,7 +76,10 @@
                 scribbletuber.style.left = `${positionSlider.value}px`
             })
 
-
+            speakingValue = `${audioAdjuster.value}`
+            audioAdjuster.addEventListener('input', () => {
+                speakingValue = audioAdjuster.value
+            })
 
             navigator.mediaDevices.getUserMedia({ audio: true })
                 .then((stream) => {
@@ -97,6 +110,7 @@
                         //set audioBar length to dB
                         audioBar.style.width = `${dB}%`
 
+                        console.log(speakingValue)
                         console.log(dB)
                         
                         if (dB < 10) {
@@ -109,6 +123,7 @@
                             scribbletuber.style.bottom = `${dB}px`
                             scribbletuber.classList.add('talking')
                             scribbletuber.classList.remove('idle')
+                            audioBar.style.backgroundColor = `palevioletred`;
                         }
                         else {
                             // super loud
@@ -116,6 +131,8 @@
                             scribbletuber.style.bottom = `${dB}px`
                             scribbletuber.classList.add('talking')
                             scribbletuber.classList.remove('idle')
+                            audioBar.style.backgroundColor = `crimson`;
+
                         }
                     }
                     // })
