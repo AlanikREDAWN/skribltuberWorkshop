@@ -13,6 +13,14 @@
                 height: 24px;
                 width: 50%;
             } */
+            @font-face {
+                font-family: "summerPixel";
+                src: url("SummerPixel22Regular-jE0W7.ttf");
+            }
+            .controlPanelInfo {
+                font-family: "summerPixel", "PixelifySans", sans-serif;
+                font-size: x-large;
+            }
             .audioBar {
                 color: #000;
 
@@ -60,6 +68,10 @@
         <div class="controlPanel">
             <div class="audioBar" id="audioBar"></div>
             <input type="range" class="audioAdjuster" id="audioAdjuster" min="0" max="100">
+            <p class="controlPanelInfo" id="controlPanelInfo"></p>
+            <div class="buttons" id="buttons">
+                
+            </div>
         </div>
 
     
@@ -68,6 +80,7 @@
             const scribbletuber = document.getElementById('scribbletuber')
             const audioBar = document.getElementById('audioBar')
             const audioAdjuster = document.getElementById('audioAdjuster')
+            const controlPanelInfo = document.getElementById('controlPanelInfo')
             var speakingValue = 20
 
             // when you slide the input, move the image
@@ -76,9 +89,16 @@
                 scribbletuber.style.left = `${positionSlider.value}px`
             })
 
+            //set speaking value to slider value
             speakingValue = `${audioAdjuster.value}`
             audioAdjuster.addEventListener('input', () => {
-                speakingValue = audioAdjuster.value
+                speakingValue = `${audioAdjuster.value}`
+            })
+
+            //set control panel info to slider value
+            controlPanelInfo.innerText = `Audio Adjuster Value: ${audioAdjuster.value}`
+            audioAdjuster.addEventListener('input', () => {
+                controlPanelInfo.innerText = `Audio Adjuster Value: ${audioAdjuster.value}`
             })
 
             navigator.mediaDevices.getUserMedia({ audio: true })
@@ -110,15 +130,15 @@
                         //set audioBar length to dB
                         audioBar.style.width = `${dB}%`
 
-                        console.log(speakingValue)
-                        console.log(dB)
+                        // console.log(speakingValue)
+                        // console.log(dB)
                         
-                        if (dB < 10) {
+                        if (dB < `${audioAdjuster.value}`) {
                             scribbletuber.src = "closed.png"
                             scribbletuber.style.bottom = `${dB/10}px`
                             scribbletuber.classList.remove('talking')
                             scribbletuber.classList.add('idle')
-                        } else if (dB < 20) {
+                        } else if (dB < `${audioAdjuster.value}` + 10) {
                             scribbletuber.src = "open.png"
                             scribbletuber.style.bottom = `${dB}px`
                             scribbletuber.classList.add('talking')
